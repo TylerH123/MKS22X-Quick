@@ -16,49 +16,53 @@ public class Quick{
     return output;
   }
   public static int quickselect(int[] data, int k){
-    return partition(data,0,data.length-1, k);
+    int start = 0;
+    int end = data.length - 1;
+    while(true){
+      int pivot = partition(data,start,end,end-start + 1);
+      //if pivot equals k then return the num at k
+      if (k == pivot){
+        return data[k];
+      }
+      //if k is less than pivot look from beginning to the pivot
+      if (k < pivot){
+        end = pivot;
+      }
+      //else look at the end startingg from pivot
+      else{
+        start = pivot;
+      }
+    }
   }
-  //recursive helper for quickselect
-  public static int partition(int[] data, int start, int end, int index){
+  //chooses a pivot and reorders the array
+  public static int partition(int[] data, int start, int end, int length){
     Random rand = new Random();
     //index of pivot value
-    int pivot = rand.nextInt(data.length);
-    System.out.println(pivot);
-    System.out.println(data[pivot]);
+    int pivot = rand.nextInt(length);
     //swap pivot to the first number of index
     swap(data,0,pivot);
-    System.out.println(toString(data));
-    //base case
-    if (start == end){
-      return data[pivot];
-    }
     while (start != end){
+      //if val is bigger than pivot val then swap to end and end moves back
       if (data[start] > data[pivot]){
         swap(data,start, end);
         end--;
-        System.out.println("swap to end" + toString(data));
       }
+      //if val is smaller than pivot val then do not swap, but instead start moves forward
       if (data[start] < data[pivot]){
         start++;
       }
     }
-    if (data[start] > data[pivot]){
-      swap(data,0,start-1);
-      pivot = start-1;
+    //if the val is bigger than pivot val then swap with the value before it
+    if (data[start] < data[pivot]){
+      start--;
     }
-    else{
-      swap(data,0,start);
-      pivot = start;
-    }
-    if (pivot < index){
-      return partition(data,start+1,end,index);
-    }
-    else{
-      return partition(data,0,start-1,index);
-    }
+    swap(data,start,pivot);
+    //return the index of start val
+    return start;
   }
   public static void main(String[] args){
     int[] data = new int[]{9,19,8,1,12,99,10};
     System.out.println(quickselect(data,1));
+    System.out.print(toString(data));
   }
 }
