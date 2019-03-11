@@ -16,6 +16,10 @@ public class Quick{
     return output;
   }
   public static int quickselect(int[] data, int k){
+    return partition(data,0,data.length-1, k);
+  }
+  //recursive helper for quickselect
+  public static int partition(int[] data, int start, int end, int index){
     Random rand = new Random();
     //index of pivot value
     int pivot = rand.nextInt(data.length);
@@ -24,10 +28,8 @@ public class Quick{
     //swap pivot to the first number of index
     swap(data,0,pivot);
     System.out.println(toString(data));
-    int start = 1;
-    int end = data.length - 1;
     //base case
-    if (start == end && start == k){
+    if (start == end){
       return data[pivot];
     }
     while (start != end){
@@ -42,11 +44,18 @@ public class Quick{
     }
     if (data[start] > data[pivot]){
       swap(data,0,start-1);
+      pivot = start-1;
     }
     else{
       swap(data,0,start);
+      pivot = start;
     }
-    return quickselect(data, k);
+    if (pivot < index){
+      return partition(data,start+1,end,index);
+    }
+    else{
+      return partition(data,0,start-1,index);
+    }
   }
   public static void main(String[] args){
     int[] data = new int[]{9,19,8,1,12,99,10};
