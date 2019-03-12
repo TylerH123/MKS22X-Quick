@@ -27,21 +27,20 @@ public class Quick{
   public static int quickselect(int[] data, int k){
     int lo = 0;
     int hi = data.length - 1;
-    int pivot = partition(data,lo,hi);
     //System.out.println("toString" + Arrays.toString(data));
-    //System.out.println("pivot: " + pivot);
-    while(k != pivot) {
+    int idx = partition(data,lo,hi);
+    while(k != idx) {
       //if k is less than pivot look from beginning to the pivot
-      if (k < pivot){
-        hi = pivot;
+      if (k < idx){
+        hi = idx;
       }
-      //else look at the hi loingg from pivot
-      else if (k > pivot){
-        lo = pivot;
+      //else start at the pivot and go to the hi
+      else if (k > idx){
+        lo = idx;
       }
-      pivot = partition(data,lo,hi);
-      //System.out.println(pivot);
-      //System.out.println("toString" + Arrays.toString(data));
+      idx = partition(data,lo,hi);
+      //System.out.println("Index: " + idx + " k: " + k + " lo: " + lo + " hi:" + hi);
+      //System.out.println("toString: " + Arrays.toString(data));
     }
     return data[k];
   }
@@ -49,11 +48,12 @@ public class Quick{
   public static int partition(int[] data, int lo, int hi){
     Random rand = new Random();
     //index of pivot value
-    int pivot = rand.nextInt(hi-lo+1);
+    int pivot = rand.nextInt(hi-lo+1) + lo;
     int pivotIdx = lo;
     //System.out.println("pivot #: " + pivot + " value: " + data[pivot]);
     //swap pivot to the first number of index
     swap(data,lo,pivot);
+    lo++;
     //System.out.println("partition first toString: " + Arrays.toString(data) + "lo: " + data[lo] + " loIdx: " + lo + " hi: " + data[hi] + " hiIdx: " + hi);
     while (lo != hi){
       //if val is bigger than pivot val then swap to hi and hi moves back
@@ -87,13 +87,13 @@ public class Quick{
     //System.out.println(quickselect(data,4));
     //System.out.println(Arrays.toString(data));
     System.out.println(quickselect(ary,0) == 0);
-    //System.out.println(quickselect(ary,1) == 2);
-    //System.out.println(quickselect(ary,2) == 5);
-    //System.out.println(quickselect(ary,3) == 10);
-    //System.out.println(quickselect(ary,4) == 15);
-    //System.out.println(quickselect(ary,5) == 23);
-    Arrays.sort(ary);
-    System.out.println(Arrays.toString(ary));
+    System.out.println(quickselect(ary,1) == 2);
+    System.out.println(quickselect(ary,2) == 5);
+    System.out.println(quickselect(ary,3) == 10);
+    System.out.println(quickselect(ary,4) == 15);
+    System.out.println(quickselect(ary,5) == 23);
+    //Arrays.sort(ary);
+    //System.out.println(Arrays.toString(ary));
     //System.out.println(generateMedian(7));
   }
 }
