@@ -7,14 +7,6 @@ public class Quick{
     arr[a] = arr[b];
     arr[b] = old;
   }
-  public static String toString(int[] arr){
-    String output = "[";
-    for (int i = 0; i < arr.length-1; i++){
-      output += arr[i] + ", ";
-    }
-    output += arr[arr.length-1] + "]";
-    return output;
-  }
   public static int generateMedian(int length){
     Random rand = new Random();
     int a = rand.nextInt(length);
@@ -33,11 +25,11 @@ public class Quick{
     return -1;
   }
   public static int quickselect(int[] data, int k){
-    int lo = 1;
+    int lo = 0;
     int hi = data.length - 1;
     int pivot = partition(data,lo,hi);
-    System.out.println("toString" + toString(data));
-    System.out.println("pivot: " + pivot);
+    //System.out.println("toString" + Arrays.toString(data));
+    //System.out.println("pivot: " + pivot);
     while(k != pivot) {
       //if k is less than pivot look from beginning to the pivot
       if (k < pivot){
@@ -48,8 +40,8 @@ public class Quick{
         lo = pivot;
       }
       pivot = partition(data,lo,hi);
-      System.out.println(pivot);
-      System.out.println("toString" + toString(data));
+      //System.out.println(pivot);
+      //System.out.println("toString" + Arrays.toString(data));
     }
     return data[k];
   }
@@ -57,38 +49,51 @@ public class Quick{
   public static int partition(int[] data, int lo, int hi){
     Random rand = new Random();
     //index of pivot value
-    int pivot = rand.nextInt(hi-lo+2);
-    System.out.println("pivot #: " + pivot + " value: " + data[pivot]);
+    int pivot = rand.nextInt(hi-lo+1);
+    int pivotIdx = lo;
+    //System.out.println("pivot #: " + pivot + " value: " + data[pivot]);
     //swap pivot to the first number of index
-    swap(data,0,pivot);
-    System.out.println("partition first toString: " + toString(data));
+    swap(data,lo,pivot);
+    //System.out.println("partition first toString: " + Arrays.toString(data) + "lo: " + data[lo] + " loIdx: " + lo + " hi: " + data[hi] + " hiIdx: " + hi);
     while (lo != hi){
       //if val is bigger than pivot val then swap to hi and hi moves back
-      if (data[lo] > data[0]){
+      if (data[lo] > data[pivotIdx]){
         swap(data,lo, hi);
+        //System.out.println("partition toString: " + Arrays.toString(data) + "lo: " + data[lo] + " lo: " + lo + " hi: " + data[hi]);
         hi--;
-        System.out.println("partition toString: " + toString(data));
       }
       //if val is smaller than pivot val then do not swap, but instead lo moves forward
-      if (data[lo] < data[0]){
+      else if (data[lo] < data[pivotIdx]){
         lo++;
-        System.out.println("partition toString: " + toString(data));
+        //System.out.println("partition toString: " + Arrays.toString(data) + "lo: " + data[lo] + " hi: " + data[hi]);
       }
     }
     //if the val is bigger than pivot val then swap with the value before it
-    if (data[lo] < data[0]){
+    if (data[lo] > data[pivotIdx]){
       lo--;
     }
-    swap(data,0,lo);
+    swap(data,pivotIdx,lo);
     //return the index of lo val
+    //System.out.println(Arrays.toString(data));
     return lo;
   }
   public static void main(String[] args){
     int[] data = new int[]{9,19,8,1,12,99,10};
-    System.out.println(partition(data,1,6));
-    //System.out.println("sorted: [1,8,9,10,12,19,99]");
+    int[] data2 = new int[]{1000,99,1881,1,10,12};
+    int[] ary = { 2, 10, 15, 23, 0,  5};
+    //System.out.println(partition(data,1,6));
     //System.out.println(quickselect(data,1));
-    //System.out.println(toString(data));
+    //System.out.println(quickselect(data,data.length-1));
+    //System.out.println(quickselect(data,4));
+    //System.out.println(Arrays.toString(data));
+    System.out.println(quickselect(ary,0) == 0);
+    //System.out.println(quickselect(ary,1) == 2);
+    //System.out.println(quickselect(ary,2) == 5);
+    //System.out.println(quickselect(ary,3) == 10);
+    //System.out.println(quickselect(ary,4) == 15);
+    //System.out.println(quickselect(ary,5) == 23);
+    Arrays.sort(ary);
+    System.out.println(Arrays.toString(ary));
     //System.out.println(generateMedian(7));
   }
 }
