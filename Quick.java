@@ -28,17 +28,17 @@ public class Quick{
     int lo = 0;
     int hi = data.length - 1;
     //System.out.println("toString" + Arrays.toString(data));
-    int idx = partition(data,lo,hi);
-    while(k != idx) {
+    int pivot = partition(data,lo,hi);
+    while(k != pivot) {
       //if k is less than pivot look from beginning to the pivot
-      if (k < idx){
-        hi = idx;
+      if (k < pivot){
+        hi = pivot-1;
       }
       //else start at the pivot and go to the hi
-      else if (k > idx){
-        lo = idx;
+      if (k > pivot){
+        lo = pivot+1;
       }
-      idx = partition(data,lo,hi);
+      pivot = partition(data,lo,hi);
       //System.out.println("Index: " + idx + " k: " + k + " lo: " + lo + " hi:" + hi);
       //System.out.println("toString: " + Arrays.toString(data));
     }
@@ -53,9 +53,11 @@ public class Quick{
     //System.out.println("pivot #: " + pivot + " value: " + data[pivot]);
     //swap pivot to the first number of index
     swap(data,lo,pivot);
-    lo++;
+    if (lo < data.length-1){
+      lo++;
+    }
     //System.out.println("partition first toString: " + Arrays.toString(data) + "lo: " + data[lo] + " loIdx: " + lo + " hi: " + data[hi] + " hiIdx: " + hi);
-    while (lo != hi){
+    while (lo < hi){
       //if val is bigger than pivot val then swap to hi and hi moves back
       if (data[lo] > data[pivotIdx]){
         swap(data,lo, hi);
@@ -77,9 +79,17 @@ public class Quick{
     //System.out.println(Arrays.toString(data));
     return lo;
   }
+  public void quicksort(int[] data, int lo, int hi){
+    if (lo >= hi){
+      return;
+    }
+    int pivot = partition(data,lo,hi);
+    quicksort(data,lo,pivot-1);
+    quicksort(data,pivot+1,lo);
+  }
   public static void main(String[] args){
-    int[] data = new int[]{9,19,8,1,12,99,10};
-    int[] data2 = new int[]{1000,99,1881,1,10,12};
+    //int[] data = new int[]{9,19,8,1,12,99,10};
+    //int[] data2 = new int[]{1000,99,1881,1,10,12};
     int[] ary = { 2, 10, 15, 23, 0,  5};
     //System.out.println(partition(data,1,6));
     //System.out.println(quickselect(data,1));
