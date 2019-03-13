@@ -79,7 +79,7 @@ public class Quick{
     //System.out.println(Arrays.toString(data));
     return lo;
   }
-  public void quicksort(int[] data, int lo, int hi){
+  public static void quicksort(int[] data, int lo, int hi){
     if (lo >= hi){
       return;
     }
@@ -87,21 +87,41 @@ public class Quick{
     quicksort(data,lo,pivot-1);
     quicksort(data,pivot+1,lo);
   }
+  public static boolean test(int[] ary1, int[] ary2){
+    Random rand = new Random();
+    for (int i = 0; i < ary1.length; i++){
+      int g = rand.nextInt();
+      ary1[i] = g;
+      ary2[i] = g;
+    }
+    quicksort(ary1,0,ary1.length-1);
+    Arrays.sort(ary2);
+    boolean g = true;
+    for (int i = 0; i < ary1.length; i++){
+      if (ary1[i] != ary2[i]){
+        g = false;
+      }
+    }
+    return g;
+  }
   public static void main(String[] args){
     //int[] data = new int[]{9,19,8,1,12,99,10};
     //int[] data2 = new int[]{1000,99,1881,1,10,12};
     int[] ary = { 2, 10, 15, 23, 0,  5};
+    quicksort(ary,0,ary.length-1);
+    
+    //System.out.println(Arrays.toString(ary));
     //System.out.println(partition(data,1,6));
     //System.out.println(quickselect(data,1));
     //System.out.println(quickselect(data,data.length-1));
     //System.out.println(quickselect(data,4));
     //System.out.println(Arrays.toString(data));
-    System.out.println(quickselect(ary,0) == 0);
-    System.out.println(quickselect(ary,1) == 2);
-    System.out.println(quickselect(ary,2) == 5);
-    System.out.println(quickselect(ary,3) == 10);
-    System.out.println(quickselect(ary,4) == 15);
-    System.out.println(quickselect(ary,5) == 23);
+    //System.out.println(quickselect(ary,0) == 0);
+    //System.out.println(quickselect(ary,1) == 2);
+    //System.out.println(quickselect(ary,2) == 5);
+    //System.out.println(quickselect(ary,3) == 10);
+    //System.out.println(quickselect(ary,4) == 15);
+    //System.out.println(quickselect(ary,5) == 23);
     //Arrays.sort(ary);
     //System.out.println(Arrays.toString(ary));
     //System.out.println(generateMedian(7));
