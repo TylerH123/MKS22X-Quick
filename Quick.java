@@ -63,16 +63,51 @@ public class Quick{
     //System.out.println(Arrays.toString(data));
     return pivot;
   }
-  public static void quicksort(int[] data){
-    quicksort(data,0,data.length - 1);
+  public static int[] partitionDutch(int[] data, int lo, int hi){
+    int lt = lo;
+    int gt = hi;
+    int i = lt + 1;
+    int pivot = lo;
+    while (i <= gt) {
+      if (data[i] < data[pivot]) {
+        //swap value at lower side with i
+        swap(data,lt,i);
+        lt++;
+        i++;
+        pivot++;
+      }
+      else if (data[i] == data[pivot]) {
+        //if equal just increment i by 1
+        i++;
+      }
+      else {
+        //swap value at higher side with i
+        swap(data,gt,i);
+        gt--;
+      }
+    }
+    return new int[] {lt,gt};
   }
-  public static void quicksort(int[] data, int lo, int hi){
+  public static void quicksort(int[] data){
+    quicksortD(data,0,data.length - 1);
+  }
+  //slower one
+  public static void quicksort(int[] data, int lo, int hi) {
     if (lo >= hi) {
-     return;
+      return;
     }
     int pivot = partition(data, lo, hi);
     quicksort(data, lo, pivot-1);
     quicksort(data, pivot+1, hi);
+  }
+  //faster one
+  public static void quicksortD(int[] data, int lo, int hi){
+    if (lo >= hi) {
+      return;
+    }
+    int[] pivot = partitionDutch(data, lo, hi);
+    quicksortD(data, lo, pivot[0]-1);
+    quicksortD(data, pivot[1]+1, hi);
   }
   public static void main(String[] args){
     //int[] data = new int[]{9,19,8,1,12,99,10};
