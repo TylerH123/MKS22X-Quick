@@ -7,23 +7,6 @@ public class Quick{
     arr[a] = arr[b];
     arr[b] = old;
   }
-  public static int generateMedian(int length){
-    Random rand = new Random();
-    int a = rand.nextInt(length);
-    int b = rand.nextInt(length);
-    int c = rand.nextInt(length);
-    System.out.println(a + " " + b + " " + c);
-    if (a <= b && b <= c ){
-      return b;
-    }
-    if (b <= a  && a <= c ){
-      return a;
-    }
-    else if (b <= c && c <= a){
-      return c;
-    }
-    return -1;
-  }
   public static int quickselect(int[] data, int k){
     int lo = 0;
     int hi = data.length - 1;
@@ -44,20 +27,15 @@ public class Quick{
     }
     return data[k];
   }
-  //chooses a pivot and reorders the array
+  //partition
   public static int partition(int[] data, int lo, int hi){
-    Random rand = new Random();
-    //index of pivot value
-    int pivot = rand.nextInt(hi-lo+1) + lo;
-    int pivotIdx = lo;
-    //System.out.println("pivot #: " + pivot + " value: " + data[pivot]);
+    int pivotIdx = (int)(Math.random() * (hi - lo + 1)) + lo;
     //swap pivot to the first number of index
-    swap(data,lo,pivot);
-    if (lo < data.length-1){
-      lo++;
-    }
+    swap(data,lo,pivotIdx);
+    pivotIdx = lo;
+    lo++;
     //System.out.println("partition first toString: " + Arrays.toString(data) + "lo: " + data[lo] + " loIdx: " + lo + " hi: " + data[hi] + " hiIdx: " + hi);
-    while (lo < hi){
+    while (lo != hi){
       //if val is bigger than pivot val then swap to hi and hi moves back
       if (data[lo] > data[pivotIdx]){
         swap(data,lo, hi);
@@ -79,13 +57,15 @@ public class Quick{
     //System.out.println(Arrays.toString(data));
     return lo;
   }
+  public static void quicksort(int[] data){
+    quicksort(data,0,data.length - 1);
+  }
   public static void quicksort(int[] data, int lo, int hi){
-    if (lo >= hi){
-      return;
+    if (lo <= hi){
+      int pivot = partition(data,lo,hi);
+      quicksort(data,lo,pivot-1);
+      quicksort(data,pivot+1,lo);
     }
-    int pivot = partition(data,lo,hi);
-    quicksort(data,lo,pivot-1);
-    quicksort(data,pivot+1,lo);
   }
   public static boolean test(int[] ary1, int[] ary2){
     Random rand = new Random();
@@ -108,8 +88,16 @@ public class Quick{
     //int[] data = new int[]{9,19,8,1,12,99,10};
     //int[] data2 = new int[]{1000,99,1881,1,10,12};
     int[] ary = { 2, 10, 15, 23, 0,  5};
-    quicksort(ary,0,ary.length-1);
-    
+    //quicksort(ary,0,ary.length-1);
+    /**Random rand = new Random();
+    int[] arr = new int[10];
+    for (int i = 0; i < arr.length; i++){
+      int g = rand.nextInt(20);
+      arr[i] = g;
+    }**/
+    //System.out.println(Arrays.toString(arr));
+    //quicksort(arr,0,arr.length-1);
+    //System.out.println(Arrays.toString(arr));
     //System.out.println(Arrays.toString(ary));
     //System.out.println(partition(data,1,6));
     //System.out.println(quickselect(data,1));
